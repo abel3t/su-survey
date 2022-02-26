@@ -89,10 +89,8 @@ const GiftAssessment: React.FC = () => {
         >
           Ân tứ thuộc linh
         </Box>
-        <div className="p-2 md:p-3 lg:p-4 text-sm">
-          Hãy trả lời 140 câu hỏi (5 nhóm) bằng cách chấm mức độ đúng với khả năng/xu hướng/tâm tình của bạn. Đúng nhất
-          với mình là điểm 10, không đúng nhất với mình là điểm 1. Chấm điểm ngay cho các câu mô tả được đưa ra. Đừng
-          suy nghĩ cẩn thận quá, đây là chỉ là khảo sát.
+        <div className="p-2 md:p-3 lg:p-4 text-md">
+          Để giúp thiếu nhi có cái nhìn bao quát hơn về ân tứ của mình, khảo sát này có thể được thực hiện bởi thiếu nhi, phụ huynh và giáo viên của em đó.
         </div>
       </div>
 
