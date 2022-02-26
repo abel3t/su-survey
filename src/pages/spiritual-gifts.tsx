@@ -7,7 +7,7 @@ import ErrorIcon from '@mui/icons-material/Error';
 import GiftQuestion from '../components/GiftQuestion';
 import { giftQuestionsAtom, updateGiftQuestionAtom } from 'settings/store';
 
-const GiftAssessment: React.FC = () => {
+const SpiritualGifts: React.FC = () => {
   const [ currentPage, setCurrentPage ] = useState(1);
   const [ showErrorDialog, setShowErrorDialog ] = useState(false);
   const [ isSubmit, setIsSubmit ] = useState(false);
@@ -160,4 +160,4 @@ const GiftAssessment: React.FC = () => {
   );
 };
 
-export default GiftAssessment;
+export default SpiritualGifts;

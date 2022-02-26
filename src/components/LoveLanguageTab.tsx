@@ -57,7 +57,7 @@ const LoveLanguageTab: React.FC = () => {
 
       <Box sx={{ mt: 5 }}>
         <Button variant="contained">
-          <Link href="/love-language-assessment">
+          <Link href="/love-languages">
             Làm khảo sát
           </Link>
         </Button>
