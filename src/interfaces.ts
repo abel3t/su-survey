@@ -13,5 +13,6 @@ export interface ILoveLanguageAnswer {
 
 export interface ILoveLanguageQuestion {
   id: number;
-  answers: ILoveLanguageAnswer[]
+  answers: ILoveLanguageAnswer[],
+  hasError?: boolean
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import ErrorIcon from '@mui/icons-material/Error';
 import RadioGroup from '@mui/material/RadioGroup';
 import Radio from '@mui/material/Radio';
@@ -10,7 +10,7 @@ interface LoveLanguageProps {
 }
 
 const LoveLanguageQuestion: React.FC<LoveLanguageProps> = ({ index, question }) => {
-  const handleChange = (aIndex: number, event: any): void => {
+  const handleChange = (aIndex: number, event: React.ChangeEvent<HTMLInputElement>) => {
     const answers: any = JSON.parse(JSON.stringify(question.answers));
     const value = parseInt(event.target.value);
     answers[aIndex].mark = value;
@@ -41,7 +41,7 @@ const LoveLanguageQuestion: React.FC<LoveLanguageProps> = ({ index, question }) 
           aria-label="option"
           name="controlled-radio-buttons-group"
           value={0}
-          onChange={handleChange}
+          onChange={(event: ChangeEvent<HTMLInputElement>) => handleChange(0, event)}
           sx={{ justifyContent: 'start' }}
           className=""
       >

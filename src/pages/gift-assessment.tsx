@@ -34,13 +34,13 @@ const GiftAssessment: React.FC = () => {
     setIsSubmit(false);
 
     let hasError = false;
-    let result: any = {};
+    const result: Record<string, any> = {};
     giftQuestions
       .slice((currentPage - 1) * 10, currentPage * 10)
       .forEach((question: any) => {
         if (!question.value) {
           hasError = true;
-          updateGiftQuestion(question.id, { hasError: true });
+          updateGiftQuestion(1);
           result[question.id] = { type: question.type, mark: 0 };
         } else {
           result[question.id] = { type: question.type, mark: question.value };
@@ -58,7 +58,7 @@ const GiftAssessment: React.FC = () => {
     setIsSubmit(true);
 
     let hasError = false;
-    let result: any = {};
+    const result: Record<string, any> = {};
     Object.values(giftQuestions).forEach((question: any) => {
       if (!question.value) {
         hasError = true;
