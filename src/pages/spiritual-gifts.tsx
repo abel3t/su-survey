@@ -47,11 +47,13 @@ const SpiritualGifts: React.FC = () => {
         }
       });
 
-    if (!hasError) {
-      setCurrentPage(currentPage + 1);
-    } else {
-      setShowErrorDialog(true);
-    }
+    setCurrentPage(currentPage + 1);
+
+    // if (!hasError) {
+    //   setCurrentPage(currentPage + 1);
+    // } else {
+    //   setShowErrorDialog(true);
+    // }
   };
 
   const onClickSubmit = () => {

@@ -14,7 +14,7 @@ const GiftQuestion: React.FC<GiftQuestionProps> = ({ index, question }) => {
   };
 
   return (
-    <div className={`w-full md:w-3/4 lg:w-2/3 p-2 md:p-3 lg:p-4 mb-3 border-gray-400 rounded-lg bg-white ${
+    <div className={`w-full md:w-3/4 lg:w-2/3 p-2 md:p-3 lg:p-3 mb-3 border-gray-400 rounded-lg bg-white ${
       question.hasError &&
       'border border-red-500'}`}>
 

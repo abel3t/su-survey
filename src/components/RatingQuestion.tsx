@@ -3,6 +3,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
 import ErrorIcon from '@mui/icons-material/Error';
+import { styled } from '@mui/material';
 
 interface RatingQuestionProps {
   index: number,
@@ -27,7 +28,7 @@ const RatingQuestion: React.FC<RatingQuestionProps> = ({ index, id, title, isReq
         </div>
 
         <div className="flex items-end justify-around">
-          <div className="pb-2 w-1/12 md:w-1/6">Không giống tôi</div>
+          <div className="pb-2 w-1/12 md:w-1/6 text-xs md:text-sm lg:text-md">Không giống tôi</div>
           <RadioGroup
               aria-label="option"
               name="controlled-radio-buttons-group"
@@ -40,7 +41,7 @@ const RatingQuestion: React.FC<RatingQuestionProps> = ({ index, id, title, isReq
               Options(5)
             }
           </RadioGroup>
-          <div className="pb-2 w-1/12 md:w-1/6">
+          <div className="pb-2 w-1/12 md:w-1/6 text-xs md:text-sm lg:text-md">
             Rất giống tôi
           </div>
         </div>
@@ -59,11 +60,35 @@ const RatingQuestion: React.FC<RatingQuestionProps> = ({ index, id, title, isReq
 
 function Options(n: number) {
   const options = [];
+  const StyledRadio = styled(Radio)(({ theme }) => ({
+    [theme.breakpoints.down('md')]: {
+      '& .MuiSvgIcon-root': {
+        fontSize: 18,
+      }
+    },
+    [theme.breakpoints.up('md')]: {
+      '& .MuiSvgIcon-root': {
+        fontSize: 22,
+      }
+    },
+    [theme.breakpoints.up('lg')]: {
+      '& .MuiSvgIcon-root': {
+        fontSize: 25,
+      }
+    },
+  }));
+
   for (let i = 0; i <= n; i++) {
     options.push(
         <FormControlLabel
             style={{ margin: 0, padding: 0 }}
-            labelPlacement="top" value={i} control={<Radio/>} label={i} key={`key-${i}`}/>
+            labelPlacement="top" value={i} control={
+          <StyledRadio sx={{
+            '& .MuiButtonBase-root-MuiRadio-root': {
+              padding: 0
+            },
+          }} />} label={i} key={`key-${i}`}
+        />
     );
   }
 
