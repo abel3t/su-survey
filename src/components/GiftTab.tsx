@@ -54,12 +54,12 @@ const GiftTab: React.FC = () => {
         }
 
         {
-            isLoaded && !result && <div className="mb-5">
+            isLoaded && !result.length && <div className="mb-5">
               Chưa có kết quả. Làm khảo sát ngay nhé!</div>
         }
 
         {
-            isLoaded && result &&
+            isLoaded && result.length &&
             <Box>
               <p className="mb-5 text-bold">Kết quả của bạn</p>
 

@@ -56,7 +56,7 @@ const LoveLanguageTab: React.FC = () => {
         }
 
         {
-            isLoaded && result &&
+            isLoaded && result.length &&
             <Box>
               <p className="mb-5 text-bold">Kết quả của bạn</p>
 
