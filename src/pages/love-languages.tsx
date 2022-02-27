@@ -29,16 +29,13 @@ const GiftAssessment: React.FC = () => {
     questions.forEach((question: ILoveLanguageQuestion, index: number) => {
       if (question.answer === undefined) {
         hasError = true;
-      } else {
-        const type = question.answers[question.answer].type;
-        result[type] = (result[type] || 0) + 1;
-      }
-
-      if (hasError) {
         updateQuestions({
           index: index - 1,
           question: { hasError: true }
         });
+      } else {
+        const type = question.answers[question.answer].type;
+        result[type] = (result[type] || 0) + 1;
       }
     });
 

@@ -83,7 +83,7 @@ const LoveLanguageResultTable = (result: any) => {
         <Table aria-label="result table">
           <TableHead>
             <TableRow>
-              <TableCell align="left"><strong>ID</strong></TableCell>
+              <TableCell align="left"><strong>STT</strong></TableCell>
               <TableCell align="left"><strong>Tên</strong></TableCell>
               <TableCell align="left"><strong>Điểm</strong></TableCell>
             </TableRow>

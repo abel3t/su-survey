@@ -4,6 +4,8 @@ export interface IGiftQuestion {
   id: number;
   text: string;
   type: GiftType;
+  answer?: number;
+  hasError?: boolean;
 }
 
 export interface ILoveLanguageAnswer {
@@ -22,5 +24,11 @@ export interface ILoveLanguageQuestion {
 export interface ILoveLanguageResult {
   id: number;
   type: LoveLanguageType | number;
+  value: number;
+}
+
+export interface IGiftResult {
+  id: number;
+  type: GiftType | number;
   value: number;
 }
