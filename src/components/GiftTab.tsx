@@ -59,7 +59,7 @@ const GiftTab: React.FC = () => {
         }
 
         {
-            isLoaded && result.length &&
+            isLoaded && !!result.length &&
             <Box>
               <p className="mb-5 text-bold">Kết quả của bạn</p>
 
@@ -73,7 +73,7 @@ const GiftTab: React.FC = () => {
           <Button variant="contained">
             <Link href="/spiritual-gifts">
               <span>
-                Làm {result.length && 'lại'} khảo sát
+                Làm {!!result.length && 'lại'} khảo sát
               </span>
             </Link>
           </Button>
