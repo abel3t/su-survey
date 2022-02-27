@@ -72,10 +72,10 @@ const GiftAssessment: React.FC = () => {
             Ngôn Ngữ Yêu Thương
           </Box>
           <div className="p-2 md:p-3 lg:p-4 text-md">
-            Em cảm thấy mình được yêu nhất khi nào? Hay có khi nào em cố gắng diễn đạt tình yêu của mình với ai đó nhưng
+            <p>Em cảm thấy mình được yêu nhất khi nào? Hay có khi nào em cố gắng diễn đạt tình yêu của mình với ai đó nhưng
             người kia lại không cảm nhận được? À, đó là vì mỗi người đều có một cách diễn đạt và cảm nhận tình yêu khác
             nhau, các nhà nghiên cứu tâm lý gọi đó là những “ngôn ngữ yêu thương.” Hãy khám phá ngôn ngữ yêu thương của
-            em nhé. Nếu được, cũng hãy tìm hiểu xem các anh, chị, em của em có ngôn ngữ yêu thương nào nha.
+            em nhé. Nếu được, cũng hãy tìm hiểu xem các anh, chị, em của em có ngôn ngữ yêu thương nào nha.</p>
 
             <p className="mt-1">
               <i className="text-sm">Mỗi câu dưới đây đều có hai lựa chọn, hãy chọn ý nào mà em thấy đúng với mình nhiều

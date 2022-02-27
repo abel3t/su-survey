@@ -113,14 +113,14 @@ const SpiritualGiftsSurvey: React.FC = () => {
             Khảo Sát Ân Tứ
           </Box>
           <div className="p-2 md:p-3 lg:p-4 text-md">
-            Để giúp thiếu nhi có cái nhìn bao quát hơn về ân tứ của mình, khảo sát này có thể được thực hiện bởi thiếu
+            <p>Để giúp thiếu nhi có cái nhìn bao quát hơn về ân tứ của mình, khảo sát này có thể được thực hiện bởi thiếu
             nhi, phụ huynh và giáo viên của em đó.
+            </p>
+            <p className="mt-1">
+              <i className="text-sm">Với mỗi câu dưới đây, hãy chọn số điểm tương ứng với khả năng của con trong việc mà
+                câu đề cập. 5 điểm là điểm số cao nhất, 0 điểm là điểm số thấp nhất.</i>
+            </p>
           </div>
-
-          <p className="mt-1">
-            <i className="text-sm">Với mỗi câu dưới đây, hãy chọn số điểm tương ứng với khả năng của con trong việc mà
-              câu đề cập. 5 điểm là điểm số cao nhất, 0 điểm là điểm số thấp nhất.</i>
-          </p>
         </div>
 
         {
