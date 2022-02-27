@@ -36,10 +36,6 @@ const GiftAssessment: React.FC = () => {
     questions.forEach((question: ILoveLanguageQuestion) => {
       if (!Number.isInteger(question.answer)) {
         hasError = true;
-        dispatch(updateLoveLanguageQuestion({
-          id: question.id,
-          question: { hasError: true }
-        }));
       } else {
         const type = question.answers[question?.answer || 0]?.type || LoveLanguageType.A;
         result[type] = (result[type] || 0) + 1;
@@ -81,7 +77,7 @@ const GiftAssessment: React.FC = () => {
 
         {
           questions.map((question, index) =>
-              <LoveLanguageQuestion key={`q${index + 1}`} index={index + 1} question={question} />
+              <LoveLanguageQuestion key={`q${index + 1}`} question={question} />
           )
         }
 

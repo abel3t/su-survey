@@ -12,8 +12,6 @@ const SpiritualGiftsSurvey: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [showErrorDialog, setShowErrorDialog] = useState(false);
   const [isSubmit, setIsSubmit] = useState(false);
-  const [errorMap, setErrorMap] = useState<Record<string, boolean>>({});
-  const [, setHasChanged] = useState(false);
 
   const giftQuestions = useSelector(getGiftQuestions);
   const dispatch = useDispatch();
@@ -29,16 +27,8 @@ const SpiritualGiftsSurvey: React.FC = () => {
 
     if (defaultQuestions) {
       dispatch(updateGiftQuestions(defaultQuestions));
-      setHasChanged(true);
     }
   }, []);
-
-  const onSelectResult = (id: number) => {
-    setErrorMap({
-      ...errorMap,
-      [id]: false,
-    });
-  }
 
   const onClickPrev = () => {
     setCurrentPage(currentPage - 1);
@@ -68,7 +58,6 @@ const SpiritualGiftsSurvey: React.FC = () => {
     if (!hasError) {
       setCurrentPage(currentPage + 1);
     } else {
-      setErrorMap(newErrorMap);
       setShowErrorDialog(true);
     }
   };
@@ -85,10 +74,6 @@ const SpiritualGiftsSurvey: React.FC = () => {
           id: question.id,
           question: { hasError: true }
         }));
-        setErrorMap({
-          ...errorMap,
-          [question.id]: true
-        });
       } else {
         result[question.type] = (result[question.type] || 0) + question.answer;
       }
@@ -132,8 +117,6 @@ const SpiritualGiftsSurvey: React.FC = () => {
                   <GiftQuestion
                       key={question.id}
                       question={question}
-                      hasError={errorMap[question.id] ?? false}
-                      onChange={onSelectResult}
                   />
               )
         }

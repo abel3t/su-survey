@@ -8,34 +8,32 @@ import { useDispatch } from 'react-redux';
 import { updateLoveLanguageQuestion } from '../slices/love-language.slice';
 
 interface LoveLanguageProps {
-  index: number,
   question: ILoveLanguageQuestion;
-  hasError?: boolean;
-  onChange?: any;
 }
 
-const LoveLanguageQuestion: React.FC<LoveLanguageProps> = ({ index, question, hasError }) => {
+const LoveLanguageQuestion: React.FC<LoveLanguageProps> = ({ question }) => {
   const dispatch = useDispatch();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(updateLoveLanguageQuestion({
-      id: index,
-      question: { answer: parseInt(event.target.value) || 0 }
+      id: question.id,
+      question: { answer: parseInt(event.target.value) || 0, hasError: false }
     }))
-    // onChange(index)
   };
 
+  console.log(question,'hhihihi');
+
   return (
-    <div className={`w-full md:w-3/4 lg:w-2/3 p-2 md:p-3 lg:p-4 mb-3 border-gray-400 rounded-lg bg-white ${hasError &&
+    <div className={`w-full md:w-3/4 lg:w-2/3 p-2 md:p-3 lg:p-4 mb-3 border-gray-400 rounded-lg bg-white ${question.hasError &&
     'border border-red-500'}`}>
       <div className="text-lg mb-2">
-        <strong>Câu {index}:</strong>
+        <strong>Câu {question.id}:</strong>
       </div>
 
       <RadioGroup
           aria-label="option"
           name="controlled-radio-buttons-group"
-          value={question.answer}
+          value={question.answer ?? -1}
           onChange={handleChange}
           sx={{ justifyContent: 'start' }}
           className=""
@@ -50,7 +48,7 @@ const LoveLanguageQuestion: React.FC<LoveLanguageProps> = ({ index, question, ha
       </RadioGroup>
 
       {
-        hasError &&
+        question.hasError &&
         (
           <div>
             <p className="mt-2 text-xs text-red-600"><ErrorIcon className="mr-2"/>Câu hỏi này là bắt buộc</p>

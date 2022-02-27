@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
@@ -10,33 +10,24 @@ import { updateGiftQuestion } from '../slices/gift.slice';
 
 interface IRatingQuestionProps {
   question: IGiftQuestion;
-  hasError: boolean;
-  onChange: any
 }
 
-const GiftQuestion: React.FC<IRatingQuestionProps> = ({ question: giftQuestion, hasError, onChange }) => {
-  const [question, setQuestion] = useState(giftQuestion);
-
-  const { id, text } = giftQuestion;
+const GiftQuestion: React.FC<IRatingQuestionProps> = ({ question }) => {
   const isRequired = true;
   const dispatch = useDispatch();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newAnswer = parseInt(event.target.value) || 0;
     dispatch(updateGiftQuestion({
-      id,
-      question: { answer: newAnswer }
-    }))
-
-    // onChange(id);
-
-    setQuestion({ ...question, answer: newAnswer });
+      id: question.id,
+      question: { answer: newAnswer, hasError: false }
+    }));
   };
   return (
-      <div className={`w-full md:w-3/4 lg:w-2/3 p-2 md:p-3 lg:p-4 mb-3 border-gray-400 rounded-lg bg-white ${isRequired && hasError &&
+      <div className={`w-full md:w-3/4 lg:w-2/3 p-2 md:p-3 lg:p-4 mb-3 border-gray-400 rounded-lg bg-white ${isRequired && question.hasError &&
       'border border-red-500'}`}>
         <div className="text-lg mb-2">
-          {id}. {text} {isRequired && <span className="text-red-600">*</span>}
+          {question.id}. {question.text} {isRequired && <span className="text-red-600">*</span>}
         </div>
 
         <div className="flex items-end justify-around">
@@ -59,7 +50,7 @@ const GiftQuestion: React.FC<IRatingQuestionProps> = ({ question: giftQuestion, 
         </div>
 
         {
-            isRequired && hasError &&
+            isRequired && question.hasError &&
             (
                 <div>
                   <p className="mt-2 text-xs text-red-600"><ErrorIcon className="mr-2"/>Câu hỏi này là bắt buộc</p>
