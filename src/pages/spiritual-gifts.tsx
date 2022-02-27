@@ -53,9 +53,8 @@ const SpiritualGifts: React.FC = () => {
           }
         });
 
-    setCurrentPage(currentPage + 1);
-
     if (!hasError) {
+      setCurrentPage(currentPage + 1);
       setCurrentPage(currentPage + 1);
     } else {
       setShowErrorDialog(true);
