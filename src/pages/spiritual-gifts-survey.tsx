@@ -12,6 +12,7 @@ const SpiritualGiftsSurvey: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [showErrorDialog, setShowErrorDialog] = useState(false);
   const [isSubmit, setIsSubmit] = useState(false);
+  const [errorMap, setErrorMap] = useState<Record<string, boolean>>({});
 
   const [giftQuestions, setGiftQuestions] = useAtom(giftQuestionsAtom);
   const [, updateQuestions] = useAtom(updateGiftQuestionAtom);
@@ -30,6 +31,13 @@ const SpiritualGiftsSurvey: React.FC = () => {
     }
   }, []);
 
+  const onSelectResult = (id: number) => {
+    setErrorMap({
+      ...errorMap,
+      [id]: false,
+    });
+  }
+
   const onClickPrev = () => {
     setCurrentPage(currentPage - 1);
   };
@@ -38,25 +46,27 @@ const SpiritualGiftsSurvey: React.FC = () => {
     setIsSubmit(false);
 
     let hasError = false;
+    const newErrorMap: Record<string, boolean> = {};
     const result: Record<string, number> = {};
     giftQuestions
         .slice((currentPage - 1) * 10, currentPage * 10)
         .forEach((question: IGiftQuestion) => {
-          if (question.answer === undefined) {
+          if (!Number.isInteger(question.answer)) {
             hasError = true;
+            newErrorMap[question.id] = true;
             updateQuestions({
               index: question.id - 1,
               question: { hasError: true }
             });
           } else {
-            result[question.type] = (result[question.type] || 0) + question.answer;
+            result[question.type] = (result[question.type] || 0) + (question.answer || 0);
           }
         });
 
     if (!hasError) {
       setCurrentPage(currentPage + 1);
-      setCurrentPage(currentPage + 1);
     } else {
+      setErrorMap(newErrorMap);
       setShowErrorDialog(true);
     }
   };
@@ -72,6 +82,10 @@ const SpiritualGiftsSurvey: React.FC = () => {
         updateQuestions({
           index: question.id - 1,
           question: { hasError: true }
+        });
+        setErrorMap({
+          ...errorMap,
+          [question.id]: true
         });
       } else {
         result[question.type] = (result[question.type] || 0) + question.answer;
@@ -102,6 +116,11 @@ const SpiritualGiftsSurvey: React.FC = () => {
             Để giúp thiếu nhi có cái nhìn bao quát hơn về ân tứ của mình, khảo sát này có thể được thực hiện bởi thiếu
             nhi, phụ huynh và giáo viên của em đó.
           </div>
+
+          <p className="mt-1">
+            <i className="text-sm">Với mỗi câu dưới đây, hãy chọn số điểm tương ứng với khả năng của con trong việc mà
+              câu đề cập. 5 điểm là điểm số cao nhất, 0 điểm là điểm số thấp nhất.</i>
+          </p>
         </div>
 
         {
@@ -111,6 +130,8 @@ const SpiritualGiftsSurvey: React.FC = () => {
                   <GiftQuestion
                       key={question.id}
                       question={question}
+                      hasError={errorMap[question.id] ?? false}
+                      onChange={onSelectResult}
                   />
               )
         }

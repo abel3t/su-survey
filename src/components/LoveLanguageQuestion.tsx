@@ -10,9 +10,11 @@ import { updateLoveLanguageQuestionsAtom } from '../settings/store';
 interface LoveLanguageProps {
   index: number,
   question: ILoveLanguageQuestion;
+  hasError?: boolean;
+  onChange?: any;
 }
 
-const LoveLanguageQuestion: React.FC<LoveLanguageProps> = ({ index, question }) => {
+const LoveLanguageQuestion: React.FC<LoveLanguageProps> = ({ index, question, hasError, onChange }) => {
   const [, updateQuestions] = useAtom(updateLoveLanguageQuestionsAtom);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -20,10 +22,11 @@ const LoveLanguageQuestion: React.FC<LoveLanguageProps> = ({ index, question }) 
       index: index - 1,
       question: { answer: parseInt(event.target.value) || 0 }
     });
+    onChange(index)
   };
 
   return (
-    <div className={`w-full md:w-3/4 lg:w-2/3 p-2 md:p-3 lg:p-4 mb-3 border-gray-400 rounded-lg bg-white ${question.hasError &&
+    <div className={`w-full md:w-3/4 lg:w-2/3 p-2 md:p-3 lg:p-4 mb-3 border-gray-400 rounded-lg bg-white ${hasError &&
     'border border-red-500'}`}>
       <div className="text-lg mb-2">
         <strong>Câu {index}:</strong>
@@ -47,7 +50,7 @@ const LoveLanguageQuestion: React.FC<LoveLanguageProps> = ({ index, question }) 
       </RadioGroup>
 
       {
-        question.hasError &&
+        hasError &&
         (
           <div>
             <p className="mt-2 text-xs text-red-600"><ErrorIcon className="mr-2"/>Câu hỏi này là bắt buộc</p>

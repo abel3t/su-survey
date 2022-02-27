@@ -10,14 +10,15 @@ import { IGiftQuestion } from '../interfaces';
 
 interface IRatingQuestionProps {
   question: IGiftQuestion;
+  hasError: boolean;
+  onChange: any
 }
 
-const GiftQuestion: React.FC<IRatingQuestionProps> = ({ question: giftQuestion }) => {
+const GiftQuestion: React.FC<IRatingQuestionProps> = ({ question: giftQuestion, hasError, onChange }) => {
   const [, updateQuestions] = useAtom(updateGiftQuestionAtom);
   const [question, setQuestion] = useState(giftQuestion);
 
-
-  const { id, text, hasError } = giftQuestion;
+  const { id, text } = giftQuestion;
   const isRequired = true;
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,6 +27,8 @@ const GiftQuestion: React.FC<IRatingQuestionProps> = ({ question: giftQuestion }
       index: id - 1,
       question: { answer: newAnswer }
     });
+
+    onChange(id);
 
     setQuestion({ ...question, answer: newAnswer });
   };
