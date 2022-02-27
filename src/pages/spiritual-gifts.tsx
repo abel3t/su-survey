@@ -17,10 +17,15 @@ import { Line, Radar } from 'react-chartjs-2';
 import { GiftTitle, GiftType, LoveLanguageType } from '../constant';
 import { styled } from '@mui/system';
 import { IGiftResult } from '../interfaces';
+import Router from 'next/router';
 
 const SpiritualGifts: React.FC = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [result, setResult]: [IGiftResult[], any] = useState([]);
+
+  const redirectToSurveyPage = () => {
+    Router.push('/spiritual-gifts-survey').then(() => window.scrollTo(0, 0));
+  }
 
   useEffect(() => {
     const storageResult: Record<string, number> = JSON.parse(localStorage.getItem('giftResult') || 'null');
@@ -72,12 +77,8 @@ const SpiritualGifts: React.FC = () => {
           }
 
           <Box sx={{ mt: 5 }}>
-            <Button variant="contained">
-              <Link href="/spiritual-gifts-survey">
-              <span>
+            <Button variant="contained" onClick={redirectToSurveyPage}>
                 Làm {!!result.length && 'lại'} khảo sát
-              </span>
-              </Link>
             </Button>
           </Box>
         </div>

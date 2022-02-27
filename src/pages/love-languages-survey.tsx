@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Router from 'next/router'
 
 import { Box, Button, CircularProgress, Dialog, DialogTitle } from '@mui/material';
 import LoveLanguageQuestion from '../components/LoveLanguageQuestion';
@@ -8,13 +9,12 @@ import { LoveLanguageType } from '../constant';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   getLoveLanguageQuestions,
-  updateLoveLanguageQuestion,
   updateLoveLanguageQuestions
 } from '../slices/love-language.slice';
 
 const GiftAssessment: React.FC = () => {
   const [showErrorDialog, setShowErrorDialog] = useState(false);
-  const [isSubmit, setIsSubmit] = useState(false);
+  const [isSubmit, setIsSubmit] = useState<boolean>(false);
 
   const questions = useSelector(getLoveLanguageQuestions);
   const dispatch = useDispatch();
@@ -23,7 +23,6 @@ const GiftAssessment: React.FC = () => {
     const defaultQuestions = JSON.parse(localStorage.getItem('loveLanguageQuestions') || '[]');
 
     if (defaultQuestions.length) {
-      console.log('defaultQuestions', defaultQuestions);
       dispatch(updateLoveLanguageQuestions(defaultQuestions));
     }
   }, []);
@@ -46,7 +45,7 @@ const GiftAssessment: React.FC = () => {
       localStorage.setItem('loveLanguageQuestions', JSON.stringify(questions));
       localStorage.setItem('loveLanguageResult', JSON.stringify(result));
 
-      window.open('/love-languages', '_self');
+      Router.push('/love-languages').then(() => window.scrollTo(0, 0));
     } else {
       setIsSubmit(false);
       setShowErrorDialog(true);
@@ -84,7 +83,7 @@ const GiftAssessment: React.FC = () => {
         <Box>
           {
               isSubmit &&
-              <Button variant="contained" style={{ marginLeft: 15, height: 35, minWidth: 90 }}>
+              <Button variant="contained" style={{ marginLeft: 15, height: 35, minWidth: 100 }}>
                 <CircularProgress sx={{ color: '#fff' }} size={25}/>
               </Button>
           }

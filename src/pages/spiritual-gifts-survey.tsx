@@ -7,6 +7,7 @@ import { IGiftQuestion } from '../interfaces';
 import GiftQuestion from '../components/GiftQuestion';
 import { useDispatch, useSelector } from 'react-redux';
 import { getGiftQuestions, updateGiftQuestion, updateGiftQuestions } from '../slices/gift.slice';
+import Router from 'next/router';
 
 const SpiritualGiftsSurvey: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -83,7 +84,7 @@ const SpiritualGiftsSurvey: React.FC = () => {
       localStorage.setItem('giftQuestions', JSON.stringify(giftQuestions));
       localStorage.setItem('giftResult', JSON.stringify(result));
 
-      window.open('/spiritual-gifts', '_self');
+      Router.push('/love-languages').then(() => window.scrollTo(0, 0));
     } else {
       setShowErrorDialog(true);
       setIsSubmit(false);

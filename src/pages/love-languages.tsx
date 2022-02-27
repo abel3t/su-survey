@@ -11,13 +11,17 @@ import {
   TableHead,
   TableRow
 } from '@mui/material';
-import Link from 'next/link';
 import { LoveLanguageDescription, LoveLanguageTitle, LoveLanguageType } from '../constant';
 import { ILoveLanguageResult } from '../interfaces';
+import Router from 'next/router';
 
 const LoveLanguages: React.FC = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [result, setResult]: [ILoveLanguageResult[], any] = useState([]);
+
+  const redirectToSurveyPage = () => {
+    Router.push('/love-languages-survey').then(() => window.scrollTo(0, 0));
+  }
 
   useEffect(() => {
     const storageResult: Record<string, number> = JSON.parse(localStorage.getItem('loveLanguageResult') || 'null');
@@ -68,12 +72,8 @@ const LoveLanguages: React.FC = () => {
           }
 
           <Box sx={{ mt: 5 }}>
-            <Button variant="contained">
-              <Link href="/love-languages-survey">
-              <span>
+            <Button variant="contained" onClick={redirectToSurveyPage}>
                 Làm {!!result.length && 'lại'} khảo sát
-              </span>
-              </Link>
             </Button>
           </Box>
         </div>
