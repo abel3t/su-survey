@@ -119,7 +119,7 @@ const SpiritualGiftsSurvey: React.FC = () => {
           {
               currentPage === 1 &&
               <Button variant="contained" onClick={onClickNext}>
-                Next
+                Tiếp theo
               </Button>
           }
 
@@ -127,10 +127,10 @@ const SpiritualGiftsSurvey: React.FC = () => {
               currentPage > 1 && currentPage < MAX_PAGE &&
               <Box>
                 <Button variant="contained" onClick={onClickPrev} sx={{ height: 35, minWidth: 60 }}>
-                  Prev
+                  Trở lại
                 </Button>
                 <Button variant="contained" onClick={onClickNext} style={{ marginLeft: 10, height: 35, minWidth: 60 }}>
-                  Next
+                  Tiếp theo
                 </Button>
               </Box>
           }
@@ -139,7 +139,7 @@ const SpiritualGiftsSurvey: React.FC = () => {
               currentPage === MAX_PAGE &&
               <Box>
                 <Button variant="contained" onClick={onClickPrev} sx={{ height: 35, minWidth: 60 }}>
-                  Prev
+                  Trở lại
                 </Button>
                 <>
                   {
@@ -153,7 +153,7 @@ const SpiritualGiftsSurvey: React.FC = () => {
                       !isSubmit &&
                       <Button variant="contained" onClick={onClickSubmit}
                               style={{ marginLeft: 15, height: 35, minWidth: 90 }}>
-                        Submit
+                        Gửi kết quả
                       </Button>
                   }
                 </>
