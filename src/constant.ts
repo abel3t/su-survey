@@ -1,10 +1,5 @@
 import { IGiftQuestion, ILoveLanguageQuestion } from './interfaces';
 
-export enum QuestionBarType {
-  LoveLanguage,
-  Gift
-}
-
 export const enum LoveLanguageType {
   A,
   B,
@@ -20,6 +15,14 @@ export const LoveLanguageTitle = {
   [LoveLanguageType.D]: 'Sự phục vụ',
   [LoveLanguageType.E]: 'Cử chỉ âu yếm'
 };
+
+export const LoveLanguageDescription = {
+  [LoveLanguageType.A]: 'Em cảm thấy được yêu khi được nghe những lời nói động viên, khích lệ, khen ngợi, khẳng định.',
+  [LoveLanguageType.B]: 'Em cảm thấy được yêu khi người khác dành thời gian chia sẻ với em, lắng nghe em tâm sự, dành cho em sự quan tâm trọn vẹn và chú ý tuyệt đối.',
+  [LoveLanguageType.C]: 'Em cảm thấy được yêu khi được nhận những món quà ý nghĩa, bất ngờ, em sẽ rất cảm kích và trân quý những món quà ấy.',
+  [LoveLanguageType.D]: 'Em cảm thấy được yêu khi người khác tận tụy làm những việc để giúp đỡ, phục vụ em.',
+  [LoveLanguageType.E]: 'Em cảm thấy được yêu qua những hành động tiếp xúc, cử chỉ âu yếm, những cái chạm nhẹ, bắt tay…'
+}
 
 export const loveLanguageQuestions: ILoveLanguageQuestion[] = [
   {

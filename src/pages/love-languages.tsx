@@ -1,106 +1,116 @@
 import React, { useEffect, useState } from 'react';
+import {
+  Box,
+  Button,
+  Paper,
+  Skeleton,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow
+} from '@mui/material';
+import Link from 'next/link';
+import { LoveLanguageDescription, LoveLanguageTitle, LoveLanguageType } from '../constant';
+import { ILoveLanguageResult } from '../interfaces';
 
-import { Box, Button, CircularProgress, Dialog, DialogTitle } from '@mui/material';
-import LoveLanguageQuestion from '../components/LoveLanguageQuestion';
-import ErrorIcon from '@mui/icons-material/Error';
-import { useAtom } from 'jotai';
-import { loveLanguageQuestionsAtom, updateGiftQuestionAtom } from '../settings/store';
-import { ILoveLanguageQuestion } from '../interfaces';
-
-const GiftAssessment: React.FC = () => {
-  const [showErrorDialog, setShowErrorDialog] = useState(false);
-  const [isSubmit, setIsSubmit] = useState(false);
-  const [questions, setQuestions] = useAtom(loveLanguageQuestionsAtom);
-  const [, updateQuestions] = useAtom(updateGiftQuestionAtom);
+const LoveLanguages: React.FC = () => {
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [result, setResult]: [ILoveLanguageResult[], any] = useState([]);
 
   useEffect(() => {
-    const defaultQuestions = JSON.parse(localStorage.getItem('loveLanguageQuestions') || 'null');
+    const storageResult: Record<string, number> = JSON.parse(localStorage.getItem('loveLanguageResult') || 'null');
 
-    if (defaultQuestions) {
-      setQuestions(defaultQuestions);
+    if (storageResult) {
+      const _result: ILoveLanguageResult[] = Object.entries(storageResult)
+          .map(([key, value]: [string, number]) => {
+            return {
+              id: parseInt(key),
+              type: parseInt(key) as LoveLanguageType,
+              value
+            };
+          });
+      _result.sort((a: ILoveLanguageResult, b: ILoveLanguageResult) => b.value - a.value);
+
+      setResult(_result);
     }
+
+    setIsLoaded(true);
   }, []);
 
-  const onClickSubmit = () => {
-    setIsSubmit(true);
-    let hasError = false;
-    const result: Record<string, number> = {};
-
-    questions.forEach((question: ILoveLanguageQuestion, index: number) => {
-      if (question.answer === undefined) {
-        hasError = true;
-        updateQuestions({
-          index: index - 1,
-          question: { hasError: true }
-        });
-      } else {
-        const type = question.answers[question.answer].type;
-        result[type] = (result[type] || 0) + 1;
-      }
-    });
-
-    if (!hasError) {
-      localStorage.setItem('loveLanguageQuestions', JSON.stringify(questions));
-      localStorage.setItem('loveLanguageResult', JSON.stringify(result));
-
-      window.open('/', '_self');
-    } else {
-      setIsSubmit(false);
-      setShowErrorDialog(true);
-    }
-  };
-
   return (
-      <div className="p-2 sm:p-3 md:p-4 lg:p-5 flex flex-col items-center bg-blue-200" style={{ minHeight: '100vh' }}>
-        <div className="w-full md:w-3/4 lg:w-2/3 mb-3 border-gray-400 rounded-lg bg-white">
-          <Box
-              className="text-2xl md:text-3xl text-center text-white rounded-t-lg border-green-100 py-3 w-full"
-              sx={{ bgcolor: 'primary.main' }}
-          >
-            Ngôn Ngữ Yêu Thương
+      <div className="flex justify-center">
+        <div className="p-2 sm:p-3 md:p-5 lg:p-10 w-full md:w-3/4 lg:w-2/3 mb-2">
+          {
+              !isLoaded && <div className="mb-3">
+                <Skeleton variant="rectangular" height={20} className="mt-1 w-full md:w-3/4 lg:w-2/3"/>
+                <Skeleton variant="rectangular" height={50} className="mt-1 w-full md:w-3/4 lg:w-2/3"/>
+                <Skeleton variant="rectangular" height={150} className="mt-1 w-full md:w-3/4 lg:w-2/3"/>
+                <Skeleton variant="rectangular" height={100} className="mt-1 w-full md:w-3/4 lg:w-2/3"/>
+              </div>
+          }
+
+          {
+              isLoaded && !result.length && <div className="mb-5">
+                Em vẫn chưa có kết quả. Hãy làm khảo sát ngay nhé!</div>
+          }
+
+          {
+              isLoaded && !!result.length &&
+              <Box>
+                <p className="mb-5 font-bold text-lg">Kết quả của em</p>
+
+                {LoveLanguageResultTable(result)}
+                {/*{GiftLineChartResult(result)}*/}
+                {/*{GiftRadarChartResult(result)}*/}
+              </Box>
+          }
+
+          <Box sx={{ mt: 5 }}>
+            <Button variant="contained">
+              <Link href="/love-languages-survey">
+              <span>
+                Làm {!!result.length && 'lại'} khảo sát
+              </span>
+              </Link>
+            </Button>
           </Box>
-          <div className="p-2 md:p-3 lg:p-4 text-md">
-            Em cảm thấy mình được yêu nhất khi nào? Hay có khi nào em cố gắng diễn đạt tình yêu của mình với ai đó nhưng
-            người kia lại không cảm nhận được? À, đó là vì mỗi người đều có một cách diễn đạt và cảm nhận tình yêu khác
-            nhau, các nhà nghiên cứu tâm lý gọi đó là những “ngôn ngữ yêu thương.” Hãy khám phá ngôn ngữ yêu thương của
-            em nhé. Nếu được, cũng hãy tìm hiểu xem các anh, chị, em của em có ngôn ngữ yêu thương nào nha.
-
-            <p className="mt-1">
-              <i className="text-sm">Mỗi câu dưới đây đều có hai lựa chọn, hãy chọn ý nào mà em thấy đúng với mình nhiều
-                hơn, rồi khoanh tròn vào chữ cái in hoa ở cuối ý đó.</i>
-            </p>
-          </div>
         </div>
-
-        {
-          questions.map((question, index) =>
-              <LoveLanguageQuestion key={`q${index + 1}`} index={index + 1} question={question}/>
-          )
-        }
-
-        <Box>
-          {
-              isSubmit &&
-              <Button variant="contained" style={{ marginLeft: 15, height: 35, minWidth: 90 }}>
-                <CircularProgress sx={{ color: '#fff' }} size={25}/>
-              </Button>
-          }
-
-          {
-              !isSubmit &&
-              <Button variant="contained" onClick={onClickSubmit}
-                      style={{ marginLeft: 15, height: 35, minWidth: 90 }}>
-                Xem Kết Quả
-              </Button>
-          }
-        </Box>
-
-        <Dialog onClose={() => setShowErrorDialog(false)} open={showErrorDialog} sx={{ top: -400 }}>
-          <DialogTitle className="text-md text-red-600"><ErrorIcon
-              className="mr-2"/><span>Hãy trả lời tất cả câu hỏi nào!</span></DialogTitle>
-        </Dialog>
       </div>
   );
 };
 
-export default GiftAssessment;
+const LoveLanguageResultTable = (result: any) => {
+  return (
+      <TableContainer component={Paper}>
+        <Table aria-label="result table">
+          <TableHead>
+            <TableRow>
+              <TableCell align="left"><strong>STT</strong></TableCell>
+              <TableCell align="left"><strong>Tên</strong></TableCell>
+              <TableCell align="left"><strong>Mô tả</strong></TableCell>
+              <TableCell align="left"><strong>Điểm</strong></TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {result
+                .map(({ id, type, value }: any, index: number) => (
+                    <TableRow
+                        key={id}
+                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                    >
+                      <TableCell align="left">{index + 1}</TableCell>
+                      <TableCell align="left"><span
+                          className="font-bold text-md">{LoveLanguageTitle[type as LoveLanguageType]}</span></TableCell>
+                      <TableCell align="left">{LoveLanguageDescription[type as LoveLanguageType]}</TableCell>
+                      <TableCell align="left">{value}</TableCell>
+                    </TableRow>
+                ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+  );
+};
+
+export default LoveLanguages;
