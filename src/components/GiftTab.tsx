@@ -73,7 +73,7 @@ const GiftTab: React.FC = () => {
           <Button variant="contained">
             <Link href="/spiritual-gifts">
           <span>
-          Làm {result && 'lại'} khảo sát
+          Làm {result.length && 'lại'} khảo sát
         </span>
             </Link>
           </Button>

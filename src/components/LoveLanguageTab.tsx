@@ -51,7 +51,7 @@ const LoveLanguageTab: React.FC = () => {
         }
 
         {
-            isLoaded && !result && <div className="mb-5">
+            isLoaded && !result.length && <div className="mb-5">
               Chưa có kết quả. Làm khảo sát ngay nhé!</div>
         }
 
@@ -69,7 +69,7 @@ const LoveLanguageTab: React.FC = () => {
         <Box sx={{ mt: 5 }}>
           <Button variant="contained">
             <Link href="/love-languages">
-              Làm khảo sát
+              Làm {result.length && 'lại'} khảo sát
             </Link>
           </Button>
         </Box>
