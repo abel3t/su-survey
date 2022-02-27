@@ -4,8 +4,8 @@ import RadioGroup from '@mui/material/RadioGroup';
 import Radio from '@mui/material/Radio';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { ILoveLanguageQuestion } from '../interfaces';
-import { useAtom } from 'jotai';
-import { updateLoveLanguageQuestionsAtom } from '../settings/store';
+import { useDispatch } from 'react-redux';
+import { updateLoveLanguageQuestion } from '../slices/love-language.slice';
 
 interface LoveLanguageProps {
   index: number,
@@ -14,15 +14,15 @@ interface LoveLanguageProps {
   onChange?: any;
 }
 
-const LoveLanguageQuestion: React.FC<LoveLanguageProps> = ({ index, question, hasError, onChange }) => {
-  const [, updateQuestions] = useAtom(updateLoveLanguageQuestionsAtom);
+const LoveLanguageQuestion: React.FC<LoveLanguageProps> = ({ index, question, hasError }) => {
+  const dispatch = useDispatch();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    updateQuestions({
-      index: index - 1,
+    dispatch(updateLoveLanguageQuestion({
+      id: index,
       question: { answer: parseInt(event.target.value) || 0 }
-    });
-    onChange(index)
+    }))
+    // onChange(index)
   };
 
   return (

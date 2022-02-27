@@ -3,47 +3,43 @@ import React, { useEffect, useState } from 'react';
 import { Box, Button, CircularProgress, Dialog, DialogTitle } from '@mui/material';
 import LoveLanguageQuestion from '../components/LoveLanguageQuestion';
 import ErrorIcon from '@mui/icons-material/Error';
-import { useAtom } from 'jotai';
-import { loveLanguageQuestionsAtom, updateGiftQuestionAtom } from '../settings/store';
 import { ILoveLanguageQuestion } from '../interfaces';
 import { LoveLanguageType } from '../constant';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  getLoveLanguageQuestions,
+  updateLoveLanguageQuestion,
+  updateLoveLanguageQuestions
+} from '../slices/love-language.slice';
 
 const GiftAssessment: React.FC = () => {
   const [showErrorDialog, setShowErrorDialog] = useState(false);
   const [isSubmit, setIsSubmit] = useState(false);
-  const [questions, setQuestions] = useAtom(loveLanguageQuestionsAtom);
-  const [, updateQuestions] = useAtom(updateGiftQuestionAtom);
-  const [errorMap, setErrorMap] = useState<Record<string, boolean>>({});
+
+  const questions = useSelector(getLoveLanguageQuestions);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const defaultQuestions = JSON.parse(localStorage.getItem('loveLanguageQuestions') || 'null');
+    const defaultQuestions = JSON.parse(localStorage.getItem('loveLanguageQuestions') || '[]');
 
-    if (defaultQuestions) {
-      setQuestions(defaultQuestions);
+    if (defaultQuestions.length) {
+      console.log('defaultQuestions', defaultQuestions);
+      dispatch(updateLoveLanguageQuestions(defaultQuestions));
     }
   }, []);
-
-  const onSelectResult = (id: number) => {
-    setErrorMap({
-      ...errorMap,
-      [id]: false,
-    });
-  }
 
   const onClickSubmit = () => {
     setIsSubmit(true);
     let hasError = false;
     const result: Record<string, number> = {};
-    const newErrorMap: Record<string, boolean> = {};
 
-    questions.forEach((question: ILoveLanguageQuestion, index: number) => {
+    questions.forEach((question: ILoveLanguageQuestion) => {
       if (!Number.isInteger(question.answer)) {
         hasError = true;
-        newErrorMap[question.id] = true;
-        updateQuestions({
-          index: index - 1,
+        dispatch(updateLoveLanguageQuestion({
+          id: question.id,
           question: { hasError: true }
-        });
+        }));
       } else {
         const type = question.answers[question?.answer || 0]?.type || LoveLanguageType.A;
         result[type] = (result[type] || 0) + 1;
@@ -56,7 +52,6 @@ const GiftAssessment: React.FC = () => {
 
       window.open('/love-languages', '_self');
     } else {
-      setErrorMap(newErrorMap);
       setIsSubmit(false);
       setShowErrorDialog(true);
     }
@@ -86,7 +81,7 @@ const GiftAssessment: React.FC = () => {
 
         {
           questions.map((question, index) =>
-              <LoveLanguageQuestion key={`q${index + 1}`} index={index + 1} question={question} hasError={errorMap[question.id] ?? false} onChange={onSelectResult}/>
+              <LoveLanguageQuestion key={`q${index + 1}`} index={index + 1} question={question} />
           )
         }
 

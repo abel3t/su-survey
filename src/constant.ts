@@ -604,7 +604,7 @@ export const giftQuestions: IGiftQuestion[] = [
   },
   {
     id: 60,
-    text: 'Con thích chăm sóc động vật /thực vật /thiên nhiên.',
+    text: 'Con thích chăm sóc động vật/thực vật/thiên nhiên.',
     type: GiftType.L
   }
 ];

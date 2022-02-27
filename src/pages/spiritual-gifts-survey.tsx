@@ -1,21 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { useAtom } from 'jotai';
 
 import { Box, Button, CircularProgress, Dialog, DialogTitle } from '@mui/material';
 import ErrorIcon from '@mui/icons-material/Error';
 
-import { giftQuestionsAtom, updateGiftQuestionAtom } from 'settings/store';
 import { IGiftQuestion } from '../interfaces';
 import GiftQuestion from '../components/GiftQuestion';
+import { useDispatch, useSelector } from 'react-redux';
+import { getGiftQuestions, updateGiftQuestion, updateGiftQuestions } from '../slices/gift.slice';
 
 const SpiritualGiftsSurvey: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [showErrorDialog, setShowErrorDialog] = useState(false);
   const [isSubmit, setIsSubmit] = useState(false);
   const [errorMap, setErrorMap] = useState<Record<string, boolean>>({});
+  const [, setHasChanged] = useState(false);
 
-  const [giftQuestions, setGiftQuestions] = useAtom(giftQuestionsAtom);
-  const [, updateQuestions] = useAtom(updateGiftQuestionAtom);
+  const giftQuestions = useSelector(getGiftQuestions);
+  const dispatch = useDispatch();
 
   const MAX_PAGE = Math.ceil(giftQuestions.length / 10);
 
@@ -27,7 +28,8 @@ const SpiritualGiftsSurvey: React.FC = () => {
     const defaultQuestions = JSON.parse(localStorage.getItem('giftQuestions') || 'null');
 
     if (defaultQuestions) {
-      setGiftQuestions(defaultQuestions);
+      dispatch(updateGiftQuestions(defaultQuestions));
+      setHasChanged(true);
     }
   }, []);
 
@@ -54,10 +56,10 @@ const SpiritualGiftsSurvey: React.FC = () => {
           if (!Number.isInteger(question.answer)) {
             hasError = true;
             newErrorMap[question.id] = true;
-            updateQuestions({
-              index: question.id - 1,
+            dispatch(updateGiftQuestion({
+              id: question.id,
               question: { hasError: true }
-            });
+            }));
           } else {
             result[question.type] = (result[question.type] || 0) + (question.answer || 0);
           }
@@ -79,10 +81,10 @@ const SpiritualGiftsSurvey: React.FC = () => {
     giftQuestions.forEach((question: IGiftQuestion) => {
       if (question.answer === undefined) {
         hasError = true;
-        updateQuestions({
-          index: question.id - 1,
+        dispatch(updateGiftQuestion({
+          id: question.id,
           question: { hasError: true }
-        });
+        }));
         setErrorMap({
           ...errorMap,
           [question.id]: true

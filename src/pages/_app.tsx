@@ -1,8 +1,7 @@
 import '../../styles/globals.css';
 import 'tailwindcss/tailwind.css';
 
-import { Provider } from "jotai";
-
+import { Provider } from 'react-redux';
 import * as React from 'react';
 import Head from 'next/head';
 import type { AppProps } from 'next/app';
@@ -13,6 +12,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import theme from 'settings/theme';
 import createEmotionCache from 'settings/emotion-cache';
 import Layout from '../layouts';
+import { store } from 'settings/store';
 
 const clientSideEmotionCache = createEmotionCache();
 
@@ -31,7 +31,7 @@ export default function MyApp(props: MyAppProps) {
       <ThemeProvider theme={theme}>
         <CssBaseline/>
         <div>
-          <Provider>
+          <Provider store={store}>
             <Layout>
               <Component {...pageProps} />
             </Layout>

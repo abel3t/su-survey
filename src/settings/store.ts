@@ -1,19 +1,15 @@
-import { atom } from "jotai";
-import { giftQuestions, loveLanguageQuestions } from '../constant';
+import {
+  configureStore
+} from '@reduxjs/toolkit';
 
-export const giftQuestionsAtom = atom(giftQuestions);
-export const loveLanguageQuestionsAtom = atom(loveLanguageQuestions);
+import giftReducer from 'slices/gift.slice';
+import loveLanguageReducer from 'slices/love-language.slice';
 
-export const updateGiftQuestionAtom = atom(null,  (get, set, { index, question }: any) => {
-  const questions = get(giftQuestionsAtom);
-  questions[index] = { ...questions[index], ...(question || {}) };
-
-  return set(giftQuestionsAtom, questions);
+export const store = configureStore({
+  reducer: {
+    gift: giftReducer,
+    loveLanguage: loveLanguageReducer
+  }
 });
 
-export const updateLoveLanguageQuestionsAtom = atom(null,  (get, set, { index, question }: any) => {
-  const questions = get(loveLanguageQuestionsAtom);
-  questions[index] = { ...questions[index], ...(question || {}) };
-
-  return set(loveLanguageQuestionsAtom, questions);
-});
+export type RootState = ReturnType<typeof store.getState>;

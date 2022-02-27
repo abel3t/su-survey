@@ -4,9 +4,9 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
 import ErrorIcon from '@mui/icons-material/Error';
 import { styled } from '@mui/material';
-import { useAtom } from 'jotai';
-import { updateGiftQuestionAtom } from '../settings/store';
 import { IGiftQuestion } from '../interfaces';
+import { useDispatch } from 'react-redux';
+import { updateGiftQuestion } from '../slices/gift.slice';
 
 interface IRatingQuestionProps {
   question: IGiftQuestion;
@@ -15,20 +15,20 @@ interface IRatingQuestionProps {
 }
 
 const GiftQuestion: React.FC<IRatingQuestionProps> = ({ question: giftQuestion, hasError, onChange }) => {
-  const [, updateQuestions] = useAtom(updateGiftQuestionAtom);
   const [question, setQuestion] = useState(giftQuestion);
 
   const { id, text } = giftQuestion;
   const isRequired = true;
+  const dispatch = useDispatch();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newAnswer = parseInt(event.target.value) || 0;
-    updateQuestions({
-      index: id - 1,
+    dispatch(updateGiftQuestion({
+      id,
       question: { answer: newAnswer }
-    });
+    }))
 
-    onChange(id);
+    // onChange(id);
 
     setQuestion({ ...question, answer: newAnswer });
   };
