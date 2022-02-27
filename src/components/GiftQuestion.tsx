@@ -28,6 +28,7 @@ const GiftQuestion: React.FC<GiftQuestionProps> = ({ index, question }) => {
           </div>
         )
       }
+
     </div>
   );
 };

@@ -1,33 +1,25 @@
-import React, { ChangeEvent } from 'react';
+import React from 'react';
 import ErrorIcon from '@mui/icons-material/Error';
 import RadioGroup from '@mui/material/RadioGroup';
 import Radio from '@mui/material/Radio';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { ILoveLanguageQuestion } from '../interfaces';
+import { useAtom } from 'jotai';
+import { updateLoveLanguageQuestionsAtom } from '../settings/store';
+
 interface LoveLanguageProps {
   index: number,
   question: ILoveLanguageQuestion;
 }
 
 const LoveLanguageQuestion: React.FC<LoveLanguageProps> = ({ index, question }) => {
-  const handleChange = (aIndex: number, event: React.ChangeEvent<HTMLInputElement>) => {
-    const answers: any = JSON.parse(JSON.stringify(question.answers));
-    const value = parseInt(event.target.value);
-    answers[aIndex].mark = value;
+  const [, updateQuestions] = useAtom(updateLoveLanguageQuestionsAtom);
 
-    const answerMarks = answers.map((answer: any) => answer.mark);
-
-    for (let i = 0; i < answers.length; i++) {
-      const idx = answerMarks.indexOf(answers[i].mark);
-      answers[i].hasError = answers[i].mark && idx >= 0 && idx !== i;
-    }
-
-    answers[aIndex].hasError = answers[aIndex].hasError || value <= 0 || value > 5;
-
-    // dispatch(updateLoveLanguageQuestion({
-    //   id: question.id,
-    //   question: { ...question, answers, hasError: false },
-    // }));
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    updateQuestions({
+      index: index - 1,
+      question: { answer: parseInt(event.target.value) || 0 }
+    });
   };
 
   return (
@@ -40,8 +32,8 @@ const LoveLanguageQuestion: React.FC<LoveLanguageProps> = ({ index, question }) 
       <RadioGroup
           aria-label="option"
           name="controlled-radio-buttons-group"
-          value={0}
-          onChange={(event: ChangeEvent<HTMLInputElement>) => handleChange(0, event)}
+          value={question.answer}
+          onChange={handleChange}
           sx={{ justifyContent: 'start' }}
           className=""
       >

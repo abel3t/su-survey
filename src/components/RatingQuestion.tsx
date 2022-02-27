@@ -28,7 +28,7 @@ const RatingQuestion: React.FC<RatingQuestionProps> = ({ index, id, title, isReq
         </div>
 
         <div className="flex items-end justify-around">
-          <div className="pb-2 w-1/12 md:w-1/6 text-xs md:text-sm lg:text-md">Không giống tôi</div>
+          <div className="pb-2 w-1/12 md:w-1/6 text-xs md:text-sm lg:text-md">Không giống con</div>
           <RadioGroup
               aria-label="option"
               name="controlled-radio-buttons-group"
@@ -42,7 +42,7 @@ const RatingQuestion: React.FC<RatingQuestionProps> = ({ index, id, title, isReq
             }
           </RadioGroup>
           <div className="pb-2 w-1/12 md:w-1/6 text-xs md:text-sm lg:text-md">
-            Rất giống tôi
+            Rất giống con
           </div>
         </div>
 

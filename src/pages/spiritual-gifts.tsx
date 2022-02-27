@@ -89,7 +89,7 @@ const SpiritualGifts: React.FC = () => {
           className="text-2xl md:text-3xl text-center text-white rounded-t-lg border-green-100 py-3 w-full"
           sx={{ bgcolor: 'primary.main' }}
         >
-          Ân tứ thuộc linh
+          Ân Tứ Thuộc Linh
         </Box>
         <div className="p-2 md:p-3 lg:p-4 text-md">
           Để giúp thiếu nhi có cái nhìn bao quát hơn về ân tứ của mình, khảo sát này có thể được thực hiện bởi thiếu nhi, phụ huynh và giáo viên của em đó.

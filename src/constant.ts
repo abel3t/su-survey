@@ -1,4 +1,4 @@
-import { IGiftQuestion } from './interfaces';
+import { IGiftQuestion, ILoveLanguageQuestion } from './interfaces';
 
 export enum QuestionBarType {
   LoveLanguage,
@@ -21,7 +21,7 @@ export const LoveLanguageTitle = {
   [LoveLanguageType.E]: 'Cử chỉ âu yếm'
 };
 
-export const loveLanguageQuestions = [
+export const loveLanguageQuestions: ILoveLanguageQuestion[] = [
   {
     id: 1,
     text: 'Câu 1',
