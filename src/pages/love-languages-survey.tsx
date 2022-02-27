@@ -23,7 +23,12 @@ const GiftAssessment: React.FC = () => {
     const defaultQuestions = JSON.parse(localStorage.getItem('loveLanguageQuestions') || '[]');
 
     if (defaultQuestions.length) {
-      dispatch(updateLoveLanguageQuestions(defaultQuestions));
+      dispatch(updateLoveLanguageQuestions(defaultQuestions.map((question: ILoveLanguageQuestion, index: number) => {
+        return {
+          ...question,
+          text: questions[index].text,
+        }
+      })));
     }
   }, []);
 

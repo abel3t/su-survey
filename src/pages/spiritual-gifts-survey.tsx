@@ -27,7 +27,12 @@ const SpiritualGiftsSurvey: React.FC = () => {
     const defaultQuestions = JSON.parse(localStorage.getItem('giftQuestions') || 'null');
 
     if (defaultQuestions) {
-      dispatch(updateGiftQuestions(defaultQuestions));
+      dispatch(updateGiftQuestions(defaultQuestions.map((question: IGiftQuestion, index: number) => {
+        return {
+          ...question,
+          text: giftQuestions[index].text
+        }
+      })));
     }
   }, []);
 
