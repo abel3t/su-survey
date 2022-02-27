@@ -72,9 +72,9 @@ const GiftTab: React.FC = () => {
         <Box sx={{ mt: 5 }}>
           <Button variant="contained">
             <Link href="/spiritual-gifts">
-          <span>
-          Làm {result.length && 'lại'} khảo sát
-        </span>
+              <span>
+                Làm {result.length && 'lại'} khảo sát
+              </span>
             </Link>
           </Button>
         </Box>
