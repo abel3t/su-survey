@@ -89,7 +89,7 @@ const SpiritualGiftsSurvey: React.FC = () => {
       localStorage.setItem('giftQuestions', JSON.stringify(giftQuestions));
       localStorage.setItem('giftResult', JSON.stringify(result));
 
-      Router.push('/love-languages').then(() => window.scrollTo(0, 0));
+      Router.push('/spiritual-gifts').then(() => window.scrollTo(0, 0));
     } else {
       setShowErrorDialog(true);
       setIsSubmit(false);
